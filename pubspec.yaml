@@ -1,6 +1,6 @@
 name: chrome_tab_bar
 description: Chrome Tab Bar with custom corner radius, background color, tab selected color, tab text, and many more.
-version: 1.0.0
+version: 1.0.2
 homepage: https://github.com/Zee604/chrome_tab_bar.git
 
 environment:
