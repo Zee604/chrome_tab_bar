@@ -21,6 +21,15 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  plugin:
+    platforms:
+      macos:
+        pluginClass: ChromeTabBar
+      windows:
+        pluginClass: ChromeTabBar
+      web:
+        pluginClass: ChromeTabBar
+
 
   # To add assets to your package, add an assets section, like this:
   # assets:

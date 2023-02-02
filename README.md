@@ -23,12 +23,23 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return ChromeTabBar(
-        tabsList: [
-          ChromeTab(widget: const SizedBox(), title: "Title One"),
-          ChromeTab(widget: const SizedBox(), title: "Title Two")
-        ], 
-        tabSelectedColor: Colors.green,
-        tabbackgroundColor: Colors.black,
+      tabSelectedColor: Colors.white,
+      backgroundColor: Colors.blue,
+      tabsList: const [
+        SizedBox(),
+        SizedBox(),
+        SizedBox(),
+        SizedBox(),
+        SizedBox(),
+      ],
+      tabText:const [
+        "Tab One",
+        "Tab Two",
+        "Tab Three",
+        "Tab Four",
+        "Tab Five",
+      ],
+
     );
   }
 }

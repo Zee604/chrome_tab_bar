@@ -6,7 +6,7 @@ class ChromeTabBar extends StatefulWidget {
   final tabsList ;
   final tabSelectedColor;
   final backgroundColor;
-  final tabText;
+  final List<String> tabText;
 
   ChromeTabBar({Key? key,
     required this.tabsList,
