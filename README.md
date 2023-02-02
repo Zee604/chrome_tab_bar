@@ -13,11 +13,6 @@ dependencies:
 ```dart
 import 'package:chrome_tab_bar/fancy_containers.dart';
 ```
-
-<table>
-<tr>
-<td>
-
 ```dart
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -37,9 +32,4 @@ class _HomePageState extends State<HomePage> {
 }
 ```
 
-</td>
-<td>
 <img  src="https://github.com/Zee604/chrome_tab_bar/blob/master/chrome_tab_bar_img.PNG"  alt="">
-</td>
-</tr>
-</table>
