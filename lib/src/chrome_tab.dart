@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
-
-
 class ChromeTabBar extends StatefulWidget {
-  final tabsList ;
-  final tabSelectedColor;
-  final backgroundColor;
-  final tabText;
+  final List<ChromeTab> tabsList;
+  final Color tabSelectedColor;
+  final Color tabbackgroundColor;
+  final Color selectedTextColor;
+  final Color unSelectedTextColor;
 
-  ChromeTabBar({Key? key,
+  const ChromeTabBar({
+    Key? key,
     required this.tabsList,
     required this.tabSelectedColor,
-    required this.backgroundColor,
-    required this.tabText
+    required this.tabbackgroundColor,
+    this.selectedTextColor = Colors.black,
+    this.unSelectedTextColor = Colors.white,
   }) : super(key: key);
 
   @override
@@ -20,9 +21,7 @@ class ChromeTabBar extends StatefulWidget {
 }
 
 class _ChromeTabBarState extends State<ChromeTabBar> {
-
-
-  int tIndex = 0;
+  int index = 0;
   @override
   void initState() {
     super.initState();
@@ -31,37 +30,36 @@ class _ChromeTabBarState extends State<ChromeTabBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-            children: [
-              Expanded(
-                child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    decoration: const BoxDecoration(
-                      color:const Color(0xFFE6F1FE),
-                    ),
-                    child: Stack(
-                      children: [
+        backgroundColor: widget.tabbackgroundColor,
+        body: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(children: [
+            Expanded(
+              child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    color: widget.tabSelectedColor,
+                  ),
+                  child: Stack(
+                    children: [
+                      Container(
+                        color: widget.tabbackgroundColor,
+                        width: double.infinity,
+                        height: 35.0,
+                      ),
+                      Column(children: [
                         Container(
-                          color: widget.backgroundColor,
+                          color: widget.tabbackgroundColor,
                           width: double.infinity,
-                          height: 35.0,
+                          height: 20.0,
                         ),
-                        Column(children: [
-                          Container(
-                            color: widget.backgroundColor,
-                            width: double.infinity,
-                            height: 20.0,
-                          ),
-                          Container(
-                            width: double.infinity,
-                            height: 30.0,
-                            color: Colors.transparent,
-
-                            child: Row(
+                        Container(
+                          width: double.infinity,
+                          height: 30.0,
+                          color: Colors.transparent,
+                          child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -69,221 +67,115 @@ class _ChromeTabBarState extends State<ChromeTabBar> {
                                   width: 50.0,
                                   height: double.infinity,
                                   decoration: BoxDecoration(
-                                      color: widget.backgroundColor,
+                                      color: widget.tabbackgroundColor,
                                       borderRadius: BorderRadius.only(
-                                          bottomRight: tIndex == 0
+                                          bottomRight: index == 0
                                               ? const Radius.circular(17.0)
                                               : const Radius.circular(0.0))),
                                 ),
-
-                                Expanded(
-                                  child: InkWell(
-                                    hoverColor: Colors.transparent,
-
-                                    onTap: () {
-                                      setState(() {
-                                        tIndex = 0;
-                                      });
-                                    },
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: double.infinity,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          color: tIndex == 0
-                                              ? widget.tabSelectedColor
-                                              : widget.backgroundColor,
-                                          borderRadius: BorderRadius.only(
-                                              topRight: tIndex == 0
+                                for (var tabs in widget.tabsList)
+                                  Expanded(
+                                    child: InkWell(
+                                      hoverColor: Colors.transparent,
+                                      onTap: () {
+                                        setState(() {
+                                          index = widget.tabsList.indexOf(tabs);
+                                        });
+                                      },
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            color: index ==
+                                                    widget.tabsList
+                                                        .indexOf(tabs)
+                                                ? widget.tabSelectedColor
+                                                : widget.tabbackgroundColor,
+                                            borderRadius: BorderRadius.only(
+                                              topRight: index ==
+                                                      widget.tabsList
+                                                          .indexOf(tabs)
                                                   ? const Radius.circular(17.0)
                                                   : const Radius.circular(0.0),
-                                              topLeft: tIndex == 0
+                                              topLeft: index ==
+                                                      widget.tabsList
+                                                          .indexOf(tabs)
                                                   ? const Radius.circular(17.0)
                                                   : const Radius.circular(0.0),
-                                              bottomRight: tIndex == 1
+                                              bottomLeft: index - 1 ==
+                                                          widget.tabsList
+                                                              .indexOf(tabs) &&
+                                                      index - 1 != 0
                                                   ? const Radius.circular(17.0)
-                                                  : const Radius.circular(0.0))),
-                                      child: Text(
-                                        widget.tabText[0],
-                                        style: TextStyle(
-                                            color:
-                                            tIndex == 0 ? widget.backgroundColor : Colors.grey,
-                                            fontSize: 18.0),
+                                                  : index + 1 ==
+                                                          widget.tabsList
+                                                              .indexOf(tabs)
+                                                      ? const Radius.circular(
+                                                          17.0)
+                                                      : const Radius.circular(
+                                                          0.0),
+                                              bottomRight: index - 1 ==
+                                                          widget.tabsList
+                                                              .indexOf(tabs) &&
+                                                      index - 1 !=
+                                                          widget.tabsList
+                                                                  .length -
+                                                              1
+                                                  ? const Radius.circular(17.0)
+                                                  : index + 1 ==
+                                                              widget.tabsList
+                                                                  .indexOf(
+                                                                      tabs) &&
+                                                          tabs !=
+                                                              widget
+                                                                  .tabsList.last
+                                                      ? const Radius.circular(
+                                                          17.0)
+                                                      : const Radius.circular(
+                                                          0.0),
+                                            )),
+                                        child: Text(
+                                          tabs.title,
+                                          style: TextStyle(
+                                              color: index ==
+                                                      widget.tabsList
+                                                          .indexOf(tabs)
+                                                  ? widget.selectedTextColor
+                                                  : widget.unSelectedTextColor),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                    child: InkWell(
-                                      hoverColor: Colors.transparent,
-                                      onTap: () {
-                                        setState(() {
-                                          tIndex = 1;
-                                        });
-                                      },
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            color: tIndex == 1
-                                                ? const Color(0xFFE6F1FE)
-                                                : widget.backgroundColor,
-                                            borderRadius: BorderRadius.only(
-                                                topRight: tIndex == 1
-                                                    ? const Radius.circular(17.0)
-                                                    : const Radius.circular(0.0),
-                                                topLeft: tIndex == 1
-                                                    ? const Radius.circular(17.0)
-                                                    : const Radius.circular(0.0),
-                                                bottomLeft: tIndex == 0
-                                                    ? const Radius.circular(17.0)
-                                                    : const Radius.circular(0.0),
-                                                bottomRight: tIndex == 2
-                                                    ? const Radius.circular(17.0)
-                                                    : const Radius.circular(0.0))),
-                                        child: Text(
-                                          widget.tabText[1],
-                                          style: TextStyle(
-                                              color:
-                                              tIndex == 1 ? widget.backgroundColor : Colors.grey,
-                                              fontSize: 18.0),
-                                        ),
-                                      ),
-                                    )),
-                                Expanded(
-                                    child: InkWell(
-                                      hoverColor: Colors.transparent,
-                                      onTap: () {
-                                        setState(() {
-                                          tIndex = 2;
-                                        });
-                                      },
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            color: tIndex == 2
-                                                ? const Color(0xFFE6F1FE)
-                                                : widget.backgroundColor,
-                                            borderRadius: BorderRadius.only(
-                                                topRight: tIndex == 2
-                                                    ? const Radius.circular(17.0)
-                                                    : const Radius.circular(0.0),
-                                                topLeft: tIndex == 2
-                                                    ? const Radius.circular(17.0)
-                                                    : const Radius.circular(0.0),
-                                                bottomLeft: tIndex == 1
-                                                    ? const Radius.circular(17.0)
-                                                    : const Radius.circular(0.0),
-                                                bottomRight: tIndex == 3
-                                                    ? const Radius.circular(17.0)
-                                                    : const Radius.circular(0.0))),
-                                        child: Text(
-                                          widget.tabText[2],
-                                          style: TextStyle(
-                                              color:
-                                              tIndex == 2 ? widget.backgroundColor : Colors.grey,
-                                              fontSize: 18.0),
-                                        ),
-                                      ),
-                                    )),
-                                Expanded(
-                                    child: InkWell(
-                                      hoverColor: Colors.transparent,
-                                      onTap: () {
-                                        setState(() {
-                                          tIndex = 3;
-                                        });
-                                      },
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            color: tIndex == 3
-                                                ? const Color(0xFFE6F1FE)
-                                                : widget.backgroundColor,
-                                            borderRadius: BorderRadius.only(
-                                                topRight: tIndex == 3
-                                                    ? const Radius.circular(17.0)
-                                                    : const Radius.circular(0.0),
-                                                topLeft: tIndex == 3
-                                                    ? const Radius.circular(17.0)
-                                                    : const Radius.circular(0.0),
-                                                bottomLeft: tIndex == 2
-                                                    ? const Radius.circular(17.0)
-                                                    : const Radius.circular(0.0),
-                                                bottomRight: tIndex == 4
-                                                    ? const Radius.circular(17.0)
-                                                    : const Radius.circular(0.0))),
-                                        child: Text(
-                                          widget.tabText[3],
-                                          style: TextStyle(
-                                              color:
-                                              tIndex == 3 ? widget.backgroundColor : Colors.grey,
-                                              fontSize: 18.0),
-                                        ),
-                                      ),
-                                    )),
-                                Expanded(
-                                    child: InkWell(
-                                      hoverColor: Colors.transparent,
-                                      onTap: () {
-                                        setState(() {
-                                          tIndex = 4;
-                                        });
-                                      },
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          color: tIndex == 4
-                                              ? const Color(0xFFE6F1FE)
-                                              : widget.backgroundColor,
-                                          borderRadius: BorderRadius.only(
-                                            topRight: tIndex == 4
-                                                ? const Radius.circular(17.0)
-                                                : const Radius.circular(0.0),
-                                            topLeft: tIndex == 4
-                                                ? const Radius.circular(17.0)
-                                                : const Radius.circular(0.0),
-                                            bottomLeft: tIndex == 3
-                                                ? const Radius.circular(17.0)
-                                                : const Radius.circular(0.0),
-                                          ),
-                                        ),
-                                        child: Text(
-                                          widget.tabText[4],
-                                          style: TextStyle(
-                                              color:
-                                              tIndex == 4 ? widget.backgroundColor : Colors.grey,
-                                              fontSize: 18.0),
-                                        ),
-                                      ),
-                                    )),
                                 Container(
                                   width: 50.0,
                                   height: double.infinity,
                                   decoration: BoxDecoration(
-                                      color: widget.backgroundColor,
+                                      color: widget.tabbackgroundColor,
                                       borderRadius: BorderRadius.only(
-                                          bottomLeft: tIndex == 4
+                                          bottomLeft: index ==
+                                                  widget.tabsList.length - 1
                                               ? const Radius.circular(17.0)
                                               : const Radius.circular(0.0))),
                                 ),
-                              ],
-                            ),
-                          ),
-                          Expanded(child: widget.tabsList[tIndex])
-                        ]),
-                      ],
-                    )),
-              )
-            ]),
-      ),
-    );
+                              ]),
+                        ),
+                        Expanded(child: widget.tabsList[index].widget)
+                      ]),
+                    ],
+                  )),
+            )
+          ]),
+        ));
   }
+}
+
+class ChromeTab {
+  final Widget widget;
+  final String title;
+
+  ChromeTab({
+    required this.widget,
+    required this.title,
+  });
 }
