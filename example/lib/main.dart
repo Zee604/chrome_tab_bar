@@ -1,3 +1,4 @@
+import 'package:chrome_tab_bar/chrome_tab_bar.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -30,11 +31,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-
-    );
+    return ChromeTabBar(tabsList: [
+      ChromeTab(widget: const SizedBox(), title: "titleone"),
+      ChromeTab(widget: const SizedBox(), title: "titleone"),
+      ChromeTab(widget: const SizedBox(), title: "titleone"),
+      ChromeTab(widget: const SizedBox(), title: "titleone")
+    ], tabSelectedColor: Colors.green, tabbackgroundColor: Colors.black);
   }
 }
-
