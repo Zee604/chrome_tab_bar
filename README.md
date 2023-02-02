@@ -13,3 +13,33 @@ dependencies:
 ```dart
 import 'package:chrome_tab_bar/fancy_containers.dart';
 ```
+
+<table>
+<tr>
+<td>
+
+```dart
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return ChromeTabBar(tabsList: [
+      ChromeTab(widget: const SizedBox(), title: "Title One"),
+      ChromeTab(widget: const SizedBox(), title: "Title Two")
+    ], tabSelectedColor: Colors.green, tabbackgroundColor: Colors.black);
+  }
+}
+```
+
+</td>
+<td>
+<img  src="https://github.com/Zee604/chrome_tab_bar/blob/master/chrome_tab_bar_img.PNG"  alt="">
+</td>
+</tr>
+</table>
