@@ -44,16 +44,14 @@ class _HomePageState extends State<HomePage> {
           SizedBox(),
           SizedBox(),
         ],
-        tabText:const [
+        tabText: const [
           "Tab One",
           "Tab Two",
           "Tab Three",
           "Tab Four",
           "Tab Five",
         ],
-
       ),
     );
   }
 }
-
